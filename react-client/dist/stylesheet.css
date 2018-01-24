@@ -1,0 +1,19 @@
+div {
+  font-family: arial, sans-serif;
+  /*border-collapse: collapse;*/
+  /*width: 45%;*/
+}
+
+.player1, .player2 {
+	padding-left: 3px;
+}
+
+
+td {
+  border: 1px solid black;
+  font-size: 48px;
+  height: 60px;
+  padding: 8px;
+  text-align: center;
+  width: 60px;
+}
