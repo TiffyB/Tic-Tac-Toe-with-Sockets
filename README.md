@@ -1,7 +1,7 @@
 # Invitae Coding Challenge
 
 ## Problem Description
-
+Create a web application that allows two users to play tic-tac-toe. Use a duplex communication channel such as websockets so that player moves are broadcast to their opponent. The application should allow two users to "sign-in" and play against each other. Assignment of which player is 'X' vs 'O' can be arbitrary. The application should track moves and the state of the board until a player wins. Invalid moves and out of turn moves should not be allowed. 
 
 
 ## Usage

@@ -18,6 +18,7 @@ io.on('connection', function(socket){
   socket.on('username', function(username) {
   	console.log('username: ' + username);
   	if (player1 === "") {
+  		//create new game here
 			player1 = username;
 		} else {
 			player2 = username;

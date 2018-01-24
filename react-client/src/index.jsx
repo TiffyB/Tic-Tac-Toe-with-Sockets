@@ -13,6 +13,7 @@ class App extends React.Component {
     this.state = { 
       player1: "",
       player2: "waiting for player 2",
+      gameId: null,
       username: window.location.search.split('=')[1],
     }
     socket.on('players', (player1, player2) => {
@@ -63,7 +64,7 @@ class App extends React.Component {
   render () {
     return (<div>
       <h1>Tic Tac Toe</h1>
-      <Status player1={this.state.player1} player2={this.state.player2}/>
+      <Status player1={this.state.player1} player2={this.state.player2} gameId={this.state.gameId}/>
       <Board handleMove={this.handleMove.bind(this)}/>
     </div>)
   }

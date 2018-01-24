@@ -2,7 +2,12 @@ import React from 'react';
 
 const SignIn = (props) => (
   <div>
-    <span className="empty">waiting for player 1</span><button>Sign In</button>
+    <h2>Welcome to Tic Tac Toe!</h2>
+    <h4>Sign into an existing game or create a new game below:</h4>
+  	<form>
+  	Enter existing game ID here: <input type="text" value=""><button>Join Game</button><br>
+  	</form>
+  	<button>New Game</button>
   </div>
 )
 
