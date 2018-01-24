@@ -23,8 +23,8 @@ class App extends React.Component {
       username: null,
       view: "sign in",
     }
+
     socket.on('game', (player1, player2, gameId) => {
-      // console.log('got it', player1, player2)
       this.setState({
         player1: player1,
         player2: player2,

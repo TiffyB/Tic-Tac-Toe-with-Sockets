@@ -13,15 +13,18 @@ io.on('connection', function(socket){
 	socket.on('move', function(move){
     // console.log('move: ' + move);
   });
+
+
   socket.on('newGame', function(username) {
-  	// console.log('username: ' + username);
   	return db.addNewGame(username)
   	.then(results => {
-  		// console.log("new game: ", results.insertId);
   		let gameId = results.insertId;
-  		socket.emit('game', username, "waiting for player 2", gameId)
+  		socket.join(gameId)
+  		io.to(gameId).emit('game', username, "waiting for player 2", gameId);
+  		// socket.emit('game', username, "waiting for player 2", gameId)
   	})
   })
+
   socket.on('move', function(move) {
   	console.log(move);
   })
@@ -30,10 +33,14 @@ io.on('connection', function(socket){
   	console.log('join game info', joinGame)
   	let gameId = Number(joinGame[0]);
   	let username = joinGame[1]
-  	gameLogic.getGameInfo(gameId, username)
+  	return gameLogic.getGameInfo(gameId, username)
   	.then(results => {
-  		console.log('got here')
-  		console.log('join game results', results)
+  		if (!results) {
+  			socket.emit('invalid', "game id is not correct")
+  		} else {
+  			socket.join(gameId);
+  			io.to(gameId).emit('game', results.player1, results.player2, results.gameId);
+  		}
   	})
   	
 
