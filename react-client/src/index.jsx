@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import io from 'socket.io-client'
 import Board from './components/Board.jsx';
+import SignIn from './components/SignIn.jsx';
 import Status from './components/Status.jsx';
 
 let socket = io();
@@ -10,14 +11,20 @@ let socket = io();
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.createNewGame = this.createNewGame.bind(this);
+    this.enterExistingGame = this.enterExistingGame.bind(this)
+    this.handleMove = this.handleMove.bind(this);
+    this.updateUsername = this.updateUsername.bind(this);
+    this.updateGameId = this.updateGameId.bind(this)
     this.state = { 
       player1: "",
-      player2: "waiting for player 2",
+      player2: "",
       gameId: null,
-      username: window.location.search.split('=')[1],
+      username: null,
+      view: "sign in",
     }
-    socket.on('players', (player1, player2) => {
-      console.log('got it', player1, player2)
+    socket.on('newGame', (player1, player2, gameId) => {
+      // console.log('got it', player1, player2)
       this.setState({
         player1: player1,
         player2: player2
@@ -28,28 +35,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    socket.emit('username', this.state.username);
 
-    // let signinObj = {
-    //   username: this.state.username
-    // }
-    // console.log(signinObj);
-    // $.ajax({
-    //   url: '/signin',
-    //   data: JSON.stringify(signinObj),
-    //   contentType: 'application/json',
-    //   type: 'POST',
-    //   success: (data) => {
-    //     console.log('response: ', data)
-    //     this.setState({
-    //       player1: data.player1,
-    //       player2: data.player2,
-    //     })
-    //   },
-    //   error: (err) => {
-    //     console.log('err', err);
-    //   }
-    // });
   }
  
   handleMove(e) {
@@ -57,15 +43,46 @@ class App extends React.Component {
     var row = $(box).parent().attr('class')
     var col = $(e.target).attr('class')
     console.log(row, col)
-    socket.emit('move', `${row} ${col}`)
+    socket.emit('move', `${row}${col}`)
 
   }
 
+  createNewGame() { 
+    socket.emit('newGame', this.state.username);
+    // this.setState({
+    //   view: "game"
+    // })
+  }
+
+  enterExistingGame() {
+
+    socket.emit('joinGame', [this.state.gameId, this.state.username])
+  }
+
+  updateUsername(e) {
+    this.setState({
+      username: e.target.value
+    })
+  }
+
+  updateGameId(e) { //REFACTOR LATER WITH ABOVE FUNCTION
+    console.log('game id', e.target.value)
+    this.setState({
+      gameId: e.target.value
+    })
+  }
+
   render () {
-    return (<div>
-      <h1>Tic Tac Toe</h1>
-      <Status player1={this.state.player1} player2={this.state.player2} gameId={this.state.gameId}/>
-      <Board handleMove={this.handleMove.bind(this)}/>
+    return (
+    <div>
+      {this.state.view === "sign in"
+        ? <SignIn updateUsername={this.updateUsername} updateGameId={this.updateGameId} createNewGame={this.createNewGame} enterExistingGame={this.enterExistingGame}/>
+        : <div>
+            <h1>Tic Tac Toe</h1>
+            <Status player1={this.state.player1} player2={this.state.player2} gameId={this.state.gameId}/>
+            <Board handleMove={this.handleMove.bind(this)}/>
+          </div>
+      }
     </div>)
   }
 }

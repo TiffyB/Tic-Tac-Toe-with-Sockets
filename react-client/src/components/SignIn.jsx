@@ -4,10 +4,13 @@ const SignIn = (props) => (
   <div>
     <h2>Welcome to Tic Tac Toe!</h2>
     <h4>Sign into an existing game or create a new game below:</h4>
-  	<form>
-  	Enter existing game ID here: <input type="text" value=""><button>Join Game</button><br>
-  	</form>
-  	<button>New Game</button>
+
+    Enter your username: <input type="text" onChange={props.updateUsername}/><br/>
+  	Enter existing game ID here: <input type="text" onChange={props.updateGameId} /><button onClick={props.enterExistingGame}>Join Existing Game</button>
+    <span>OR</span>
+    <button onClick={props.createNewGame}>Create New Game</button>
+
+  	
   </div>
 )
 

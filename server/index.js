@@ -1,5 +1,6 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
+const db = require('../database-mysql');
 
 //TEMP===========
 var player1 = "";
@@ -15,21 +16,17 @@ io.on('connection', function(socket){
 	socket.on('move', function(move){
     console.log('move: ' + move);
   });
-  socket.on('username', function(username) {
+  socket.on('newGame', function(username) {
   	console.log('username: ' + username);
-  	if (player1 === "") {
-  		//create new game here
-			player1 = username;
-		} else {
-			player2 = username;
-		}
-		console.log(player1, player2)
+
 		io.emit('players', player1, player2 || "waiting for player 2");
   })
   socket.on('move', function(move) {
   	console.log(move);
   })
-
+  socket.on('joinGame', function(joinGame) {
+  	console.log('join game info', joinGame)
+  })
 
 	// socket.on('disconnect', function(){
 	//   console.log('user disconnected');

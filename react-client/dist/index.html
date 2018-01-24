@@ -6,16 +6,6 @@
 </head>
 <body>
 	<div id="app"></div>
-	<script>
-      if (!/(&|\?)username=/.test(window.location.search)) {
-        var newSearch = window.location.search;
-        if (newSearch !== '' & newSearch !== '?') {
-          newSearch += '&';
-        }
-        newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
-        window.location.search = newSearch;
-      }
-	</script>
 	<script type="text/javascript" src="bundle.js"></script>
 </body>
 </html>

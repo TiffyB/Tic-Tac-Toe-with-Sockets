@@ -20,25 +20,18 @@ mysqlConnection.connect(function(err) {
 
 var connection = Promise.promisifyAll(mysqlConnection);
 
+const addNewGame = (player1) => {
+  var query = `INSERT INTO games (player1) VALUES ("${player1}")`;
+  return connection.queryAsync(query);
+
+}
+
 const getBoard = (gameId) => {
   var query = `SELECT * FROM games WHERE gameId = ${gameId}`;
   return connection.queryAsync(query);
 }
 
 
-
-var selectAll = function(callback) {
-  connection.query('SELECT * FROM items', function(err, results, fields) {
-    if(err) {
-      callback(err, null);
-    } else {
-      callback(null, results);
-    }
-  });
-};
-
-var getBoard = function() {
-
+module.exports = {
+  addNewGame,
 }
-
-module.exports.selectAll = selectAll;
