@@ -5,7 +5,7 @@ CREATE DATABASE tictactoe;
 USE tictactoe;
 
 CREATE TABLE games (
-	gameId INTEGER NOT NULL AUTO_INCREMENT
+  gameId INTEGER NOT NULL AUTO_INCREMENT,
   boardId INTEGER,
   player1 VARCHAR(60),
   player2 VARCHAR(60),
@@ -15,7 +15,7 @@ CREATE TABLE games (
 );
 
 CREATE TABLE board (
-	boardId INTEGER NOT NULL
+	boardId INTEGER NOT NULL,
 	topLeft VARCHAR(1),
 	topMid VARCHAR(1),
 	topRight VARCHAR(1),
@@ -32,5 +32,5 @@ CREATE TABLE board (
 
 
 /*  Execute this file from the command line by typing:
- *    mysql -u root < database/schema.sql
+ *    mysql -u root < database-mysql/schema.sql
  *  to create the database and the tables.*/

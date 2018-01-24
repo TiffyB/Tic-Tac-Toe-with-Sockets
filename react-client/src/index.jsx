@@ -23,11 +23,13 @@ class App extends React.Component {
       username: null,
       view: "sign in",
     }
-    socket.on('newGame', (player1, player2, gameId) => {
+    socket.on('game', (player1, player2, gameId) => {
       // console.log('got it', player1, player2)
       this.setState({
         player1: player1,
-        player2: player2
+        player2: player2,
+        gameId: gameId,
+        view: "game"
       })
     })
 
@@ -55,7 +57,6 @@ class App extends React.Component {
   }
 
   enterExistingGame() {
-
     socket.emit('joinGame', [this.state.gameId, this.state.username])
   }
 
