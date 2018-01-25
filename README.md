@@ -16,13 +16,15 @@ Create a web application that allows two users to play tic-tac-toe. Use a duplex
 ### Start up:
 - On the command line, perform the following from the project’s root directory:
 	- “mysql.server start” (starts mysql server)
-    - “mysql -u root < database/schema.sql” (creates database “mightyhive” under user “root” with no password)
+    - “mysql -u root < database/schema.sql” (creates database "tictactoe" under user “root” with no password)
     - “npm install” (installs node module dependencies)
 	- "npm run react-dev"
 	- "npm run server-dev"
-	- In the browser, navigate to “localhost:3000”
+	- In the browser, navigate to “localhost:3000”. A second player can join at "localhost:3000".
 
 ## My Solution:
+
+
 
 ### Known Issues:
 - Page refresh currently not handled. User cannot re-enter game.
