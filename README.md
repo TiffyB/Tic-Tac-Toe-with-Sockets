@@ -11,6 +11,8 @@ Create a web application that allows two users to play tic-tac-toe. Use a duplex
 - Node (v6.4.0 or later)
 - Webpack (v2.2.1 or later)
 
+
+
 ### Start up:
 - On the command line, perform the following from the project’s root directory:
 	- “mysql.server start” (starts mysql server)
@@ -22,3 +24,5 @@ Create a web application that allows two users to play tic-tac-toe. Use a duplex
 
 ## My Solution:
 
+### Known Issues:
+- Does not ensure unique user names. If usernames are the same, out-of-turn moves are not prevented.

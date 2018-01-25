@@ -106,7 +106,6 @@ class App extends React.Component {
     var symbol = this.state.username === this.state.player1 ? "X" : "O"; //handle identical usernames?
     if (this.state.gameStatus === "ready" && this.state.turn === this.state.username) {
       var move = $(e.target).attr('class')
-      // console.log(row, col)
       socket.emit('move', this.state.gameId, symbol, move, this.state.origGameId)
     } else {
       this.setState({
@@ -119,7 +118,7 @@ class App extends React.Component {
     socket.emit('resetGame', this.state.player1, this.state.player2, this.state.origGameId)
   }
 
-  updateGameId(e) { //REFACTOR LATER WITH ABOVE FUNCTION
+  updateGameId(e) {
     console.log('game id', e.target.value)
     this.setState({
       gameId: e.target.value,

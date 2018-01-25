@@ -2,10 +2,7 @@ import React from 'react';
 
 const Board = (props) => (
   <div>
-    {props.invalid === true
-      ? <div className="invalid" >Sorry, that move is not valid.</div>
-      : <div></div>
-    }
+    {props.invalid === true && <div className="invalid" >Sorry, that move is not valid.</div>}
   	<table>
       <tbody>
     		<tr>
@@ -25,9 +22,8 @@ const Board = (props) => (
         </tr>
       </tbody>
   	</table>
-    {props.gameStatus === "Game won!" || props.gameStatus === "Tied game!"
-      ? <div>{props.gameStatus}<button onClick={props.resetGame}>Reset Game</button></div>
-      : <div></div>
+    {(props.gameStatus === "Game won!" || props.gameStatus === "Tied game!")
+      && <div>{props.gameStatus}<button onClick={props.resetGame}>Reset Game</button></div>
     }
   </div>
 )
