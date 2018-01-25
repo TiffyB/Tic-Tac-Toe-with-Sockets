@@ -6,10 +6,8 @@ USE tictactoe;
 
 CREATE TABLE games (
   gameId INTEGER NOT NULL AUTO_INCREMENT,
-  boardId INTEGER,
   player1 VARCHAR(60),
   player2 VARCHAR(60),
-  numMoves INTEGER NULL,
   winner VARCHAR (60),
   PRIMARY KEY (gameId)
 );

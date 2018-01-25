@@ -1,19 +1,66 @@
+body {
+  background-color: #e5e5e8;
+}
+
+button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+
 div {
   font-family: arial, sans-serif;
+  /*font-size: 14px;*/
   /*border-collapse: collapse;*/
   /*width: 45%;*/
 }
 
-.player1, .player2 {
-	padding-left: 3px;
+.gameStatus {
+  color: red;
+  margin-right: 5px
+}
+
+.info {
+  display: inline-block;
+  margin-right: 5px
+}
+
+input[type=text] {
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin: 8px 0;
+  padding: 12px 20px;
+  width: 50%;
 }
 
 .invalid {
   color: red;
 }
 
+label.gameId {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.or {
+  margin: 0px 5px;
+}
+
+.player {
+  font-weight: bold;
+}
+
+
+
 td {
-  border: 1px solid black;
+  border: none;
+  background-color: white;
   font-size: 48px;
   height: 60px;
   padding: 8px;

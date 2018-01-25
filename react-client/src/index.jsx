@@ -23,7 +23,9 @@ class App extends React.Component {
       invalid: false,
       origGameId: null,
       player1: "",
+      player1Wins: 0,
       player2: "",
+      player2Wins: 0,
       turn: null,
       username: null,
       view: "sign in",
@@ -51,8 +53,7 @@ class App extends React.Component {
       })
     })
 
-    socket.on('resetGame', (player1, player2, gameId) => {
-      console.log('received reset message')
+    socket.on('reset', (gameId) => {
       this.setState({
         gameId: gameId,
         gameStatus: "ready",
@@ -75,20 +76,28 @@ class App extends React.Component {
       })
     })
 
-    socket.on('move', (gameId, symbol, move, origGameId) => {
+    socket.on('updateBoard', (symbol, move, gameStatus, username) => {
+      let player1Wins = this.state.player1Wins;
+      let player2Wins = this.state.player2Wins;
+      if (gameStatus === "Game won!") {
+        if (username === this.state.player1) {
+          player1Wins++
+        } else {
+          player2Wins++
+        }
+      }
+
       this.setState({
+        gameStatus: gameStatus,
         invalid: false,
+        player1Wins: player1Wins,
+        player2Wins: player2Wins,
         turn: this.state.turn === this.state.player1 ? this.state.player2 : this.state.player1,
         [`${move}`]: symbol
       })
 
     })
     
-    socket.on('status', (gameStatus) => {
-      this.setState({
-        gameStatus: gameStatus
-      })
-    })
   }
 
   createNewGame() { 
@@ -106,7 +115,7 @@ class App extends React.Component {
     var symbol = this.state.username === this.state.player1 ? "X" : "O"; //handle identical usernames?
     if (this.state.gameStatus === "ready" && this.state.turn === this.state.username) {
       var move = $(e.target).attr('class')
-      socket.emit('move', this.state.gameId, symbol, move, this.state.origGameId)
+      socket.emit('move', this.state.gameId, symbol, move, this.state.username, this.state.origGameId)
     } else {
       this.setState({
         invalid: true
@@ -119,7 +128,6 @@ class App extends React.Component {
   }
 
   updateGameId(e) {
-    console.log('game id', e.target.value)
     this.setState({
       gameId: e.target.value,
       invalid: false
@@ -146,9 +154,11 @@ class App extends React.Component {
         : <div>
             <h1>Tic Tac Toe</h1>
             <Status 
-              gameId={this.state.gameId}
-              player1={this.state.player1} 
+              gameId={this.state.origGameId}
+              player1={this.state.player1}
+              player1Wins={this.state.player1Wins}
               player2={this.state.player2} 
+              player2Wins={this.state.player2Wins}
             />
             <Board 
               gameStatus={this.state.gameStatus} 

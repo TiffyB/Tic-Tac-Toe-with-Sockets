@@ -23,7 +23,7 @@ const Board = (props) => (
       </tbody>
   	</table>
     {(props.gameStatus === "Game won!" || props.gameStatus === "Tied game!")
-      && <div>{props.gameStatus}<button onClick={props.resetGame}>Reset Game</button></div>
+      && <div><h4 className="gameStatus">{props.gameStatus}</h4><button onClick={props.resetGame}>Reset Game</button></div>
     }
   </div>
 )

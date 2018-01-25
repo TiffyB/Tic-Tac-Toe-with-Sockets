@@ -10,20 +10,20 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 io.on('connection', function(socket){
 
-  socket.on('move', function(gameId, symbol, move, origGameId) {
+  socket.on('move', function(gameId, symbol, move, username, origGameId) {
   	return gameLogic.handleMove(gameId, symbol, move)
   	.then(results => {
-  		console.log(results)
   		if (results === "Invalid move") {
   			socket.emit('invalid', "invalid move");
   		} else if (results === "Tied game!") {
-  			io.to(origGameId).emit('move', gameId, symbol, move, origGameId);
-  			io.to(origGameId).emit('status', "Tied game!")
+  			io.to(origGameId).emit('updateBoard', symbol, move, "Tied game!", username);
   		} else if (results === "Valid move") {
-  			io.to(origGameId).emit('move', gameId, symbol, move, origGameId);
+  			io.to(origGameId).emit('updateBoard', symbol, move, "ready", username);
   		} else {
-  			io.to(origGameId).emit('move', gameId, symbol, move, origGameId);
-  			io.to(origGameId).emit('status', "Game won!");
+  			return db.addWinner(gameId, username)
+  			.then(results => {
+	  			io.to(origGameId).emit('updateBoard', symbol, move, "Game won!", username);
+  			})
   		}
   	})
   })
@@ -37,7 +37,7 @@ io.on('connection', function(socket){
   	})
   	.then(results => {
   		socket.join(gameId)
-  		io.to(gameId).emit('game', username, "waiting for player 2", gameId, "waiting", username);
+  		io.to(gameId).emit('game', username, "(waiting for Player 2)", gameId, "waiting", username);
   	})
   })
 
@@ -62,13 +62,10 @@ io.on('connection', function(socket){
   		return db.addNewBoard(gameId)
   	})
   	.then(results => {
-  		io.to(origGameId).emit('resetGame', player1, player2, gameId)
+  		io.to(origGameId).emit('reset', gameId)
   	})
   })
 
-	// socket.on('disconnect', function(){
-	//   console.log('user disconnected');
-	// });
 });
 server.listen(3000, function() {
 	console.log('listening on port 3000')

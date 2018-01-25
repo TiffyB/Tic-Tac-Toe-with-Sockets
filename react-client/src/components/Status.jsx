@@ -3,9 +3,19 @@ import SignIn from './SignIn.jsx';
 
 const Status = (props) => (
   <div>
-  	<span className="gameId">Game ID:</span><span className="player1">{props.gameId}</span><br/>
-    <span className="player1">Player 1:</span><span className="player1">{props.player1}</span><br/>
-    <span className="player2">Player 2:</span><span className="player2">{props.player2}</span>
+  	<label className="gameId">Game ID: </label><span className="gameId">{props.gameId}</span><br/>
+  	<div>
+  		<label className="player">Player 1: </label>
+  		<span className="info">{props.player1}</span>
+  		<label className="player">Wins: </label>
+  		<span className="info">{props.player1Wins}</span>
+  	</div>
+  	<div>
+  		<label className="player">Player 2: </label>
+  		<span className="info">{props.player2}</span>
+  		<label className="player">Wins: </label>
+  		<span className="info">{props.player2Wins}</span>
+  	</div>
   </div>
 )
 

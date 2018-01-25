@@ -1,7 +1,7 @@
 {
   "name": "TicTacToe",
   "version": "1.0.0",
-  "description": "",
+  "description": "The popular childhood game of the same name implemented using sockets!",
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
