@@ -17,6 +17,7 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "^1.17.2",
     "express": "^4.15.0",
     "jquery": "^3.1.1",
