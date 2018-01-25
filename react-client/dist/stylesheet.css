@@ -8,6 +8,9 @@ div {
 	padding-left: 3px;
 }
 
+.invalid {
+  color: red;
+}
 
 td {
   border: 1px solid black;

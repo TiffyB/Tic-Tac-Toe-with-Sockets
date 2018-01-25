@@ -17,23 +17,46 @@ class App extends React.Component {
     this.updateUsername = this.updateUsername.bind(this);
     this.updateGameId = this.updateGameId.bind(this)
     this.state = { 
+      gameId: null,
+      gameStatus: null,
+      turn: null,
+      invalid: false, 
       player1: "",
       player2: "",
-      gameId: null,
       username: null,
       view: "sign in",
     }
 
-    socket.on('game', (player1, player2, gameId) => {
+    socket.on('game', (player1, player2, gameId, status, turn) => {
       this.setState({
+        gameId: gameId,
+        gameStatus: status,
         player1: player1,
         player2: player2,
-        gameId: gameId,
+        turn: turn,
         view: "game"
       })
     })
 
-    // socket.on()
+    socket.on('status', (gameStatus) => {
+      this.setState({
+        gameStatus: gameStatus
+      })
+    })
+
+    socket.on('invalid', (msg) => {
+      this.setState({
+        invalid: true
+      })
+    })
+
+    socket.on('move', (move) => {
+      this.setState({
+        invalid: false
+      })
+
+    })
+    
   }
 
   componentDidMount() {
@@ -41,19 +64,26 @@ class App extends React.Component {
   }
  
   handleMove(e) {
-    let box = e.target
-    var row = $(box).parent().attr('class')
-    var col = $(e.target).attr('class')
-    console.log(row, col)
-    socket.emit('move', `${row}${col}`)
+    this.setState({
+      invalid: false
+    })
+    var symbol = this.state.username === this.state.player1 ? "X" : "O"; //handle identical usernames?
+    if (this.state.gameStatus === "ready" && this.state.turn === this.state.username) {
+      let box = e.target
+      var row = $(box).parent().attr('class')
+      var col = $(e.target).attr('class')
+      console.log(row, col)
+      socket.emit('move', this.state.gameId, symbol, `${row}${col}`)
+    } else {
+      this.setState({
+        invalid: true
+      })
+    }
 
   }
 
   createNewGame() { 
     socket.emit('newGame', this.state.username);
-    // this.setState({
-    //   view: "game"
-    // })
   }
 
   enterExistingGame() {
@@ -69,7 +99,8 @@ class App extends React.Component {
   updateGameId(e) { //REFACTOR LATER WITH ABOVE FUNCTION
     console.log('game id', e.target.value)
     this.setState({
-      gameId: e.target.value
+      gameId: e.target.value,
+      invalid: false
     })
   }
 
@@ -77,11 +108,11 @@ class App extends React.Component {
     return (
     <div>
       {this.state.view === "sign in"
-        ? <SignIn updateUsername={this.updateUsername} updateGameId={this.updateGameId} createNewGame={this.createNewGame} enterExistingGame={this.enterExistingGame}/>
+        ? <SignIn invalid={this.state.invalid} updateUsername={this.updateUsername} updateGameId={this.updateGameId} createNewGame={this.createNewGame} enterExistingGame={this.enterExistingGame}/>
         : <div>
             <h1>Tic Tac Toe</h1>
             <Status player1={this.state.player1} player2={this.state.player2} gameId={this.state.gameId}/>
-            <Board handleMove={this.handleMove.bind(this)}/>
+            <Board invalid={this.state.invalid} gameStatus={this.state.gameStatus} handleMove={this.handleMove.bind(this)}/>
           </div>
       }
     </div>)

@@ -20,6 +20,11 @@ mysqlConnection.connect(function(err) {
 
 var connection = Promise.promisifyAll(mysqlConnection);
 
+const addNewBoard = (gameId) => {
+  var query = `INSERT INTO boards (gameId) VALUES (${gameId})`
+  return connection.queryAsync(query);
+}
+
 const addNewGame = (player1) => { //CREATE BOARD AS WELL??
   var query = `INSERT INTO games (player1) VALUES ("${player1}")`;
   return connection.queryAsync(query);
@@ -36,13 +41,20 @@ const getGame = (gameId) => {
 }
 
 const getBoard = (gameId) => {
-  var query = `SELECT * FROM games WHERE gameId = ${gameId}`;
+  var query = `SELECT * FROM boards WHERE gameId = ${gameId}`;
   return connection.queryAsync(query);
+}
+
+const updateBoard = (gameId, symbol, move) => {
+  var query = `UPDATE games SET ${move} = "${symbol}" WHERE gameId = ${gameId}`;
 }
 
 
 module.exports = {
+  addNewBoard,
   addNewGame,
   addPlayer2,
   getGame,
+  getBoard,
+  updateBoard,
 }

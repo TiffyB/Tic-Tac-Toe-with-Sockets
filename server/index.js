@@ -20,13 +20,30 @@ io.on('connection', function(socket){
   	.then(results => {
   		let gameId = results.insertId;
   		socket.join(gameId)
-  		io.to(gameId).emit('game', username, "waiting for player 2", gameId);
-  		// socket.emit('game', username, "waiting for player 2", gameId)
+  		io.to(gameId).emit('game', username, "waiting for player 2", gameId, "waiting", username);
+  		return db.addNewBoard(gameId)
+  	})
+  	.then(results => {
+  		console.log('added new board')
   	})
   })
 
-  socket.on('move', function(move) {
+  socket.on('move', function(gameId, symbol, move) {
   	console.log(move);
+  	return gameLogic.handleMove(gameId, symbol, move)
+  	.then(results => {
+  		console.log(results)
+  		if (results === "Invalid move") {
+  			socket.emit('invalid', "invalid move");
+  		} else if (results === "Tied game!") {
+  			io.to(gameId).emit('move', symbol, move);
+  			io.to(gameId).emit('status', "Tied game!")
+  		} else if (results === "Valid move") {
+
+  		} else {
+  			//this player has won
+  		}
+  	})
   })
 
   socket.on('joinGame', function(joinGame) {
@@ -39,10 +56,9 @@ io.on('connection', function(socket){
   			socket.emit('invalid', "game id is not correct")
   		} else {
   			socket.join(gameId);
-  			io.to(gameId).emit('game', results.player1, results.player2, results.gameId);
+  			io.to(gameId).emit('game', results.player1, results.player2, results.gameId, "ready", results.player1);
   		}
   	})
-  	
 
   })
 

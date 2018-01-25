@@ -6,6 +6,10 @@ const SignIn = (props) => (
     <h4>Sign into an existing game or create a new game below:</h4>
 
     Enter your username: <input type="text" onChange={props.updateUsername}/><br/>
+    {props.invalid === true
+      ? <div className="invalid" >Sorry, this game ID is invalid. Please double-check and re-enter.</div>
+      : <div></div>
+    }
   	Enter existing game ID here: <input type="text" onChange={props.updateGameId} /><button onClick={props.enterExistingGame}>Join Existing Game</button>
     <span>OR</span>
     <button onClick={props.createNewGame}>Create New Game</button>

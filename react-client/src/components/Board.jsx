@@ -2,6 +2,10 @@ import React from 'react';
 
 const Board = (props) => (
   <div>
+    {props.invalid === true
+      ? <div className="invalid" >Sorry, that move is not valid.</div>
+      : <div></div>
+    }
   	<table>
       <tbody>
     		<tr className="top">

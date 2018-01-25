@@ -14,18 +14,18 @@ CREATE TABLE games (
   PRIMARY KEY (gameId)
 );
 
-CREATE TABLE board (
-	boardId INTEGER NOT NULL,
-	topLeft VARCHAR(1),
-	topMid VARCHAR(1),
-	topRight VARCHAR(1),
-	midLeft VARCHAR(1),
-	midMid VARCHAR(1),
-	midRight VARCHAR(1),
-	bottomLeft VARCHAR(1),
-	bottomMid VARCHAR(1),
-	bottomRight VARCHAR(1),
-	PRIMARY KEY (boardId)
+CREATE TABLE boards (
+	gameId INTEGER NOT NULL,
+	topleft VARCHAR(1),
+	topmid VARCHAR(1),
+	topright VARCHAR(1),
+	midleft VARCHAR(1),
+	midmid VARCHAR(1),
+	midright VARCHAR(1),
+	bottomleft VARCHAR(1),
+	bottommid VARCHAR(1),
+	bottomright VARCHAR(1),
+	PRIMARY KEY (gameId)
 );
 
 
