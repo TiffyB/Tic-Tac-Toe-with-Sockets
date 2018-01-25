@@ -16,15 +16,15 @@ CREATE TABLE games (
 
 CREATE TABLE boards (
 	gameId INTEGER NOT NULL,
-	topleft VARCHAR(1),
-	topmid VARCHAR(1),
-	topright VARCHAR(1),
-	midleft VARCHAR(1),
-	midmid VARCHAR(1),
-	midright VARCHAR(1),
-	bottomleft VARCHAR(1),
-	bottommid VARCHAR(1),
-	bottomright VARCHAR(1),
+	top_left VARCHAR(1),
+	top_mid VARCHAR(1),
+	top_right VARCHAR(1),
+	mid_left VARCHAR(1),
+	mid_mid VARCHAR(1),
+	mid_right VARCHAR(1),
+	bottom_left VARCHAR(1),
+	bottom_mid VARCHAR(1),
+	bottom_right VARCHAR(1),
 	PRIMARY KEY (gameId)
 );
 

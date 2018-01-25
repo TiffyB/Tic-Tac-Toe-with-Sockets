@@ -35,8 +35,8 @@ const addPlayer2 = (gameId, player2) => {
   return connection.queryAsync(query);
 }
 
-const getGame = (gameId) => {
-  var query = `SELECT * FROM games WHERE gameId = ${gameId}`;
+const addWinner = (gameId, username) => {
+  var query = `UPDATE games SET winner = "${username}" WHERE gameId = ${gameId}`;
   return connection.queryAsync(query);
 }
 
@@ -45,8 +45,19 @@ const getBoard = (gameId) => {
   return connection.queryAsync(query);
 }
 
+const getGame = (gameId) => {
+  var query = `SELECT * FROM games WHERE gameId = ${gameId}`;
+  return connection.queryAsync(query);
+}
+
+const resetGame = (player1, player2) => {
+  var query = `INSERT INTO games (player1, player2) VALUES ("${player1}", "${player2}")`;
+  return connection.queryAsync(query);
+}
+
 const updateBoard = (gameId, symbol, move) => {
-  var query = `UPDATE games SET ${move} = "${symbol}" WHERE gameId = ${gameId}`;
+  var query = `UPDATE boards SET ${move} = "${symbol}" WHERE gameId = ${gameId}`;
+  return connection.queryAsync(query);
 }
 
 
@@ -54,7 +65,9 @@ module.exports = {
   addNewBoard,
   addNewGame,
   addPlayer2,
-  getGame,
+  addWinner,
   getBoard,
+  getGame,
+  resetGame,
   updateBoard,
 }

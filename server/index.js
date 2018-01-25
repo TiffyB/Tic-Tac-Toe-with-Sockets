@@ -9,57 +9,61 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 io.on('connection', function(socket){
-	// console.log('a user connected')
-	socket.on('move', function(move){
-    // console.log('move: ' + move);
-  });
 
-
-  socket.on('newGame', function(username) {
-  	return db.addNewGame(username)
-  	.then(results => {
-  		let gameId = results.insertId;
-  		socket.join(gameId)
-  		io.to(gameId).emit('game', username, "waiting for player 2", gameId, "waiting", username);
-  		return db.addNewBoard(gameId)
-  	})
-  	.then(results => {
-  		console.log('added new board')
-  	})
-  })
-
-  socket.on('move', function(gameId, symbol, move) {
-  	console.log(move);
+  socket.on('move', function(gameId, symbol, move, origGameId) {
   	return gameLogic.handleMove(gameId, symbol, move)
   	.then(results => {
   		console.log(results)
   		if (results === "Invalid move") {
   			socket.emit('invalid', "invalid move");
   		} else if (results === "Tied game!") {
-  			io.to(gameId).emit('move', symbol, move);
-  			io.to(gameId).emit('status', "Tied game!")
+  			io.to(origGameId).emit('move', gameId, symbol, move, origGameId);
+  			io.to(origGameId).emit('status', "Tied game!")
   		} else if (results === "Valid move") {
-
+  			io.to(origGameId).emit('move', gameId, symbol, move, origGameId);
   		} else {
-  			//this player has won
+  			io.to(origGameId).emit('move', gameId, symbol, move, origGameId);
+  			io.to(origGameId).emit('status', "Game won!");
   		}
   	})
   })
 
-  socket.on('joinGame', function(joinGame) {
-  	console.log('join game info', joinGame)
-  	let gameId = Number(joinGame[0]);
-  	let username = joinGame[1]
+  socket.on('newGame', function(username) {
+  	let gameId;
+  	return db.addNewGame(username)
+  	.then(results => {
+  		gameId = results.insertId;
+  		return db.addNewBoard(gameId)
+  	})
+  	.then(results => {
+  		socket.join(gameId)
+  		io.to(gameId).emit('game', username, "waiting for player 2", gameId, "waiting", username);
+  	})
+  })
+
+  socket.on('joinGame', function(gameId, username) {
+  	gameId = Number(gameId);
   	return gameLogic.getGameInfo(gameId, username)
   	.then(results => {
   		if (!results) {
   			socket.emit('invalid', "game id is not correct")
   		} else {
   			socket.join(gameId);
-  			io.to(gameId).emit('game', results.player1, results.player2, results.gameId, "ready", results.player1);
+  			io.to(gameId).emit('game', results.player1, results.player2, results.gameId, "ready");
   		}
   	})
+  })
 
+  socket.on('resetGame', function(player1, player2, origGameId) {
+  	let gameId;
+  	return db.resetGame(player1, player2)
+  	.then(results => {
+  		gameId = results.insertId;
+  		return db.addNewBoard(gameId)
+  	})
+  	.then(results => {
+  		io.to(origGameId).emit('resetGame', player1, player2, gameId)
+  	})
   })
 
 	// socket.on('disconnect', function(){
@@ -78,24 +82,4 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + '/../react-client/dist'));
 
 
-// app.post('/signin', function(req, res) {
-// 	let username = req.body.username;
-// 	// console.log(req.body)
-// 	if (player1 === "") {
-// 		player1 = username;
-// 	} else {
-// 		player2 = username;
-// 	}
-// 	// console.log(player1, player2)
-// 	var responseObj = {
-// 		player1,
-// 		player2
-// 	}
-// 	res.send(responseObj)
-// })
-
-
-// app.listen(3000, function() {
-//   console.log('listening on port 3000!');
-// });
 

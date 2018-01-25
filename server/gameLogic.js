@@ -37,7 +37,6 @@ const handleMove = (gameId, symbol, move) => {
   })
   .then(results => {
     board[move] = symbol;
-    console.log("hopefully updated board", board);
     if (isWinningMove(board)) {
       return `${symbol} has won!`
     } else if (isTied(board)) {
@@ -54,9 +53,9 @@ const handleMove = (gameId, symbol, move) => {
 
 
 const checkDiagonals = (board) => {
-  if (board.topleft !== null && board.topleft === board.midmid && board.midmid === board.bottomright) {
+  if (board.top_left !== null && board.top_left === board.mid_mid && board.mid_mid === board.bottom_right) {
     return true;
-  } else if (board.topright !== null && board.topright === board.midmid && board.midmid === board.bottomleft) {
+  } else if (board.top_right !== null && board.top_right === board.mid_mid && board.mid_mid === board.bottom_left) {
     return true;
   } else {
     return false;
@@ -64,11 +63,11 @@ const checkDiagonals = (board) => {
 }
 
 const checkVerticals = (board) => {
-  if (board.topleft !== null && board.topleft === board.midleft && board.midleft === board.bottomleft) {
+  if (board.top_left !== null && board.top_left === board.mid_left && board.mid_left === board.bottom_left) {
     return true;
-  } else if (board.topmid !== null && board.topmid === board.midmid && board.midmid === board.bottommid) {
+  } else if (board.top_mid !== null && board.top_mid === board.mid_mid && board.mid_mid === board.bottom_mid) {
     return true;
-  } else if (board.topright !== null && board.topright === board.midright && board.midright === board.bottomright) {
+  } else if (board.top_right !== null && board.top_right === board.mid_right && board.mid_right === board.bottom_right) {
     return true;
   } else {
     return false;
@@ -76,11 +75,11 @@ const checkVerticals = (board) => {
 }
 
 const checkHorizontals = (board) => {
-  if (board.topleft !== null && board.topleft === board.topmid && board.topmid === board.topright) {
+  if (board.top_left !== null && board.top_left === board.top_mid && board.top_mid === board.top_right) {
     return true;
-  } else if (board.midleft !== null && board.midleft === board.midmid && board.midmid === board.midright) {
+  } else if (board.mid_left !== null && board.mid_left === board.mid_mid && board.mid_mid === board.mid_right) {
     return true;
-  } else if (board.bottomleft !== null && board.bottomleft === board.bottommid && board.bottommid === board.bottomright) {
+  } else if (board.bottom_left !== null && board.bottom_left === board.bottom_mid && board.bottom_mid === board.bottom_right) {
     return true;
   } else {
     return false;
@@ -93,7 +92,6 @@ var isWinningMove = (board) => {
 
 var isTied = (board) => {
   var allLocations = Object.keys(board);
-  console.log(allLocations)
   return allLocations.every(function(location) {
     return board[location] !== null;
   })

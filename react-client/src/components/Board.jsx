@@ -8,23 +8,27 @@ const Board = (props) => (
     }
   	<table>
       <tbody>
-    		<tr className="top">
-          <td className="left" onClick={props.handleMove}></td>
-          <td className="mid" onClick={props.handleMove}></td> 
-          <td className="right" onClick={props.handleMove}></td>  
+    		<tr>
+          <td className="top_left" onClick={props.handleMove}>{props.top_left}</td>
+          <td className="top_mid" onClick={props.handleMove}>{props.top_mid}</td> 
+          <td className="top_right" onClick={props.handleMove}>{props.top_right}</td>  
         </tr>
-        <tr className="mid">
-          <td className="left" onClick={props.handleMove}></td>
-          <td className="mid" onClick={props.handleMove}></td> 
-          <td className="right" onClick={props.handleMove}></td>  
+        <tr>
+          <td className="mid_left" onClick={props.handleMove}>{props.mid_left}</td>
+          <td className="mid_mid" onClick={props.handleMove}>{props.mid_mid}</td> 
+          <td className="mid_right" onClick={props.handleMove}>{props.mid_right}</td>  
         </tr>
-        <tr className="bottom">
-          <td className="left" onClick={props.handleMove}></td>
-          <td className="mid" onClick={props.handleMove}></td> 
-          <td className="right" onClick={props.handleMove}></td>  
+        <tr>
+          <td className="bottom_left" onClick={props.handleMove}>{props.bottom_left}</td>
+          <td className="bottom_mid" onClick={props.handleMove}>{props.bottom_mid}</td> 
+          <td className="bottom_right" onClick={props.handleMove}>{props.bottom_right}</td>  
         </tr>
       </tbody>
   	</table>
+    {props.gameStatus === "Game won!" || props.gameStatus === "Tied game!"
+      ? <div>{props.gameStatus}<button onClick={props.resetGame}>Reset Game</button></div>
+      : <div></div>
+    }
   </div>
 )
 
