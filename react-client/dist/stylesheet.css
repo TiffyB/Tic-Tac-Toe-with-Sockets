@@ -27,7 +27,7 @@ div {
 
 .info {
   display: inline-block;
-  margin-right: 5px
+  margin-right: 10px
 }
 
 input[type=text] {
@@ -56,8 +56,6 @@ label.gameId {
   font-weight: bold;
 }
 
-
-
 td {
   border: none;
   background-color: white;
@@ -67,3 +65,4 @@ td {
   text-align: center;
   width: 60px;
 }
+

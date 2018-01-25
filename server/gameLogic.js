@@ -4,9 +4,9 @@ const db = require('../database-mysql');
 const getGameInfo = (gameId, username) => {
   return db.getGame(gameId)
   .then(results => {
-    if (results.length === 0) {
+    if (results.length === 0 || results[0].player1 === username) { 
       return false;
-    } else if (results[0].player2 !== null) {
+    } else if (results[0].player2 !== null) { //add username validation here
       return false;
     } else {
       let player1 = results[0].player1

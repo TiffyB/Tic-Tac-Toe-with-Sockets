@@ -25,6 +25,4 @@ Create a web application that allows two users to play tic-tac-toe. Use a duplex
 ## My Solution:
 
 ### Known Issues:
-- No username validation:
-	- Does not ensure unique user names. If usernames are the same, out-of-turn moves are not prevented.
-	- Need to limit username to 60 characters
+- Page refresh currently not handled. User cannot re-enter game.
