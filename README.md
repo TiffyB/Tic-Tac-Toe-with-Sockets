@@ -27,15 +27,15 @@ Create a web application that allows two users to play tic-tac-toe. Use a duplex
 
 ## My Solution:
 
-###Technologies:
+### Technologies:
 
 For the server, I used Node and Express. Because TicTacToe isn’t a very CPU intensive game, Node is a great choice since it would be able to handle many concurrent games. On the client side, I used React to quickly handle game updates without reloading the page. Redux was not used, in this case, since there weren’t enough state variables to justify needing it. Because React is written in ES6 and JSX, I used Webpack to bundle and transpile files. To store game data, I used a relational database with primary keys placed on queried columns to ensure the database was scalable. Socket.io was used to handle all communication between the client and the server. 
 
-###Coding Style:
+### Coding Style:
 
 I wrote my code in a way that’s modular and easy to understand. For example, database queries are broken into a separate file (i.e. database-mysql/index.js) and imported as “db.” functions. All code pertaining to game logic (i.e. checking for wins or ties, etc.) is also stored separately as server/gameLogic.js. The main server/index.js primarily handles socket communication. Function names are self-describing (i.e. “isWinningMove” returns true if the last move caused a win, false if not). Because Node is single-threaded, I used Bluebird Promises to handle asynchronous actions like database updates while keeping code readable and maintainable. Additionally, functions and React props were placed in alphabetical order so they are easy to find.
 
-###Game Design:
+### Game Design:
 
 After entering “localhost:3000”, a user lands on the sign in page. To play the game, a user enters a username and can either create a new game or join an existing one. To join an existing one, they also need to enter the Game ID. After successful sign in, the view is switched to game mode. Multiple pairs of players can play Tic Tac Toe at the same time since communication is broadcasted from the server to each pair’s Game ID. 
 
