@@ -15,9 +15,6 @@ button {
 
 div {
   font-family: arial, sans-serif;
-  /*font-size: 14px;*/
-  /*border-collapse: collapse;*/
-  /*width: 45%;*/
 }
 
 .gameStatus {
@@ -43,7 +40,7 @@ input[type=text] {
   color: red;
 }
 
-label.gameId {
+label.gameId, label.turn {
   font-weight: bold;
   margin-bottom: 10px;
 }

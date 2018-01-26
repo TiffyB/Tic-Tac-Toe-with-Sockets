@@ -9,6 +9,7 @@ const Status = (props) => (
   		<span className="info">{props.player1}</span>
   		<label className="player">Wins: </label>
   		<span className="info">{props.player1Wins}</span>
+
   	</div>
   	<div>
   		<label className="player">Player 2: </label>
@@ -16,6 +17,12 @@ const Status = (props) => (
   		<label className="player">Wins: </label>
   		<span className="info">{props.player2Wins}</span>
   	</div>
+    {props.player2 !== "(waiting for Player 2)" &&
+      <div>
+        <label className="turn">Turn: </label>
+        <span className="turn">{props.turn}</span>
+      </div>
+    }
   </div>
 )
 

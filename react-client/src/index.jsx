@@ -159,6 +159,7 @@ class App extends React.Component {
               player1Wins={this.state.player1Wins}
               player2={this.state.player2} 
               player2Wins={this.state.player2Wins}
+              turn={this.state.turn}
             />
             <Board 
               gameStatus={this.state.gameStatus} 
