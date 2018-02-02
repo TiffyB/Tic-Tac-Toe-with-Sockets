@@ -1,7 +1,7 @@
-# Invitae Coding Challenge
+# Tic Tac Toe with Sockets
 
-## Problem Description
-Create a web application that allows two users to play tic-tac-toe. Use a duplex communication channel such as websockets so that player moves are broadcast to their opponent. The application should allow two users to "sign-in" and play against each other. Assignment of which player is 'X' vs 'O' can be arbitrary. The application should track moves and the state of the board until a player wins. Invalid moves and out of turn moves should not be allowed. 
+## Description
+This web application allows two users to play tic-tac-toe against each other. Websockets are used to broadcast each player's move to their opponent. To start, a user must sign in. An option is provided for a player to start a new game or join an existing game. Moves are tracked until either a player wins or there is a tie followed by an option to reset the game. Invalid moves and out-of-turn moves are not permitted by the game.
 
 
 ## Usage
