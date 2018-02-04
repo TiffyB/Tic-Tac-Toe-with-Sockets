@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const db = require('../database-mysql');
 const gameLogic = require('./gameLogic.js');
 
@@ -71,9 +70,6 @@ server.listen(3000, function() {
 	console.log('listening on port 3000')
 });
 
-//BODYPARSER
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
 
 //REACT
 app.use(express.static(__dirname + '/../react-client/dist'));
